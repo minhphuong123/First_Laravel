@@ -95,7 +95,7 @@
                                                                     
                                                                     <div class="product-type">
                                                                         <div class="select clearfix">
-                                                                            <select class="tp" id='topping_{{$items['id']}}' name="topping_{{$items['id']}}" onchange="typeProductChange({{$items['id']}})">
+                                                                            <select class="tp" id="topping_{{$items['id']}}" name="topping_{{$items['id']}}" onchange="typeProductChange({{$items['id']}})">
                                                                                 <option value="0">--- Chọn topping ---</option>
                                                                                 @foreach ($topping as $tp)
                                                                                     <option value="{{$tp->id}}">{{$tp->name}}</option>
@@ -219,25 +219,24 @@
         if(topping && size){
             $.post('{{route('page.Post_Cart_details')}}', { _token: '{!! csrf_token() !!}',quantity:quantity,topping: topping, size:size,productID:productID}, function(res){
                 var a = parseFloat(res).toLocaleString();
-                $('#total_price_'+productID).html(a);
+                $('#total_price_'+productID).html(a.replace(".",","));
                 var t = 0;
                 $(".my-money").each(function() {
-                    
                     t += parseFloat($(this).html().replace(/,/g, ''));
                 });
-                $("#payment").html(parseFloat(t).toLocaleString());
+                $("#payment").html(parseFloat(t).toLocaleString().replace(".",","));
             });
         }
         else{
             $.post('{{route('page.Post_Cart_details')}}', { _token: '{!! csrf_token() !!}',quantity:quantity,size: size,productID:productID}, function(res){
                  var a = parseFloat(res).toLocaleString();
-                $('#total_price_'+productID).html(a);
+                $('#total_price_'+productID).html(a.replace(".",","));
                 var t = 0;
                 $(".my-money").each(function() {
                    
                     t += parseFloat($(this).html().replace(/,/g, ''));
                 });
-                $("#payment").html(parseFloat(t).toLocaleString());
+                $("#payment").html(parseFloat(t).toLocaleString().replace(".",","));
             });
         }
     }
